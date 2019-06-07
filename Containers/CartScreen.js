@@ -10,7 +10,9 @@ class CartScreen extends Component {
             <View style={styles.container}>
             {
                 this.props.cartItems.length > 0 ?
-                <Products products={this.props.cartItems} />:
+                <Products
+                onPress = {this.props.removeItem}
+                products={this.props.cartItems} />:
                 <Text>NO ITEM IN YOUR CART</Text>
             }
             </View>
@@ -33,5 +35,13 @@ const mapStateToProps = (state)=>{
         cartItems:state
     }
 }
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        removeItem:(product) => dispatch({
+            type:"REMOVE_FROM_CART",
+            payload:product
+        })
+    }
+}
 //make this component available to the app
-export default connect(mapStateToProps)(CartScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
